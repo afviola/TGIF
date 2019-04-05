@@ -12,12 +12,12 @@
         <a href="#">TGIF</a>
       </div>
       <ul>
-        <li><a href="#">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li>
           <a href="#">Congress 113</a>
           <ul>
-            <li><a href="#">Senate</a></li>
-            <li><a href="#">House</a></li>
+            <li><a href="senate.html">Senate</a></li>
+            <li><a href="house.html">House</a></li>
           </ul>
         </li>
       </ul>
@@ -40,23 +40,14 @@
     <table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Party</th>
+          <th>Senator</th>
+          <th>Party Affilication</th>
           <th>State</th>
-          <th>Years in Office</th>
-          <th>%Votes w/Party</th>
+          <th>Seniority</th>
+          <th>Percentaje of votes with party</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Lamar</td>
-          <td></td>
-          <td>Alexander</td>
-          <td>R</td>
-          <td>657</td>
-        </tr>
-      </tbody>
+      <tbody></tbody>
     </table>
   </div>
   <script src="scripts/pro-congress-113-senate.js"></script>
@@ -64,31 +55,43 @@
     "use strict";
     let posicionTabla, miembros;
 
-    posicionTabla = document.querySelector('tbody'); //aca inserto los miembros
-    miembros = data.results[0].members; //los miembros a insertar
+    posicionTabla = document.querySelector('tbody'); //posicion donde voy a insertar las columnas
+    miembros = data.results[0].members; //array de miembros
 
-    //falta escribir algunos campos
-    function agregarMiembro(miembro, tabla) {
-      let nuevaFila;
+    //objeto que agrega/saca/filtra miembros de la tabla
+    const gestorMiembros = {
 
-      nuevaFila = document.createElement('tr');
-      agregarCelda(tabla, miembro.first_name);
-      agregarCelda(tabla, miembro.party);
-      agregarCelda(tabla, miembro.state);
-      tabla.appendChild(nuevaFila); //miembro agregado
-    }
+      //agrega una columna conteniendo la informacion del miembro en posicion de la tabla indicada
+      agregarMiembro: function (miembro, posicion) {
+        let nuevaFila;
 
-    function agregarCelda(row, infoInsertar) {
-      let nuevoTD, nuevoTexto;
+        nuevaFila = document.createElement('tr');
+        this.agregarCelda(posicion, miembro.first_name + ' ' + (miembro.middle_name || '') + ' ' + miembro.last_name);
+        this.agregarCelda(posicion, miembro.party);
+        this.agregarCelda(posicion, miembro.state);
+        this.agregarCelda(posicion, miembro.seniority);
+        this.agregarCelda(posicion, miembro.votes_with_party_pct + '%');
+        posicion.appendChild(nuevaFila); //miembro agregado
+      },
 
-      nuevoTD = document.createElement('td');
-      nuevoTexto = document.createTextNode(infoInsertar);
+      //inserta un TD con la info a insertar en la row indicada
+      agregarCelda: function (row, infoInsertar) {
+        let nuevoTD, nuevoTexto;
 
-      nuevoTD.appendChild(nuevoTexto);
-      row.appendChild(nuevoTD);
-    }
+        nuevoTD = document.createElement('td');
+        nuevoTexto = document.createTextNode(infoInsertar);
 
-    agregarMiembro(miembros[0], posicionTabla);
+        nuevoTD.appendChild(nuevoTexto);
+        row.appendChild(nuevoTD);
+      },
+
+      agregarCeldaLink: function() {
+
+      }
+    };
+
+    miembros.forEach(m => gestorMiembros.agregarMiembro(m, posicionTabla));
+
   </script>
 </body>
 
