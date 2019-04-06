@@ -37,7 +37,7 @@
       precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal
       judges, other federal executive officials, military officers, regulatory officials, ambassadors, and other federal
       uniformed officers, as well as trial of federal officials impeached by the House.</p>
-    <table>
+    <table id="senate-data">
       <thead>
         <tr>
           <th>Senator</th>
@@ -53,44 +53,58 @@
   <script src="scripts/pro-congress-113-senate.js"></script>
   <script>
     "use strict";
-    let posicionTabla, miembros;
-
-    posicionTabla = document.querySelector('tbody'); //posicion donde voy a insertar las columnas
-    miembros = data.results[0].members; //array de miembros
 
     //objeto que agrega/saca/filtra miembros de la tabla
     const gestorMiembros = {
+      posicionInsercion: undefined,
+      miembros: undefined,
 
-      //agrega una columna conteniendo la informacion del miembro en posicion de la tabla indicada
-      agregarMiembro: function (miembro, posicion) {
-        let nuevaFila;
-
-        nuevaFila = document.createElement('tr');
-        this.agregarCelda(posicion, miembro.first_name + ' ' + (miembro.middle_name || '') + ' ' + miembro.last_name);
-        this.agregarCelda(posicion, miembro.party);
-        this.agregarCelda(posicion, miembro.state);
-        this.agregarCelda(posicion, miembro.seniority);
-        this.agregarCelda(posicion, miembro.votes_with_party_pct + '%');
-        posicion.appendChild(nuevaFila); //miembro agregado
+      setPosicionDondeInsertar: function (pos) {
+        this.posicionInsercion = pos;
       },
 
-      //inserta un TD con la info a insertar en la row indicada
-      agregarCelda: function (row, infoInsertar) {
+      //el array debe contener todos los miembros disponibles
+      setArrayMiebros: function (arr) {
+        this.miembros = arr;
+      },
+
+      //cada fila contiene la info personal de un funcionario
+      agregarFilaMiembro: function (miembro) {
+        let nuevaFila = document.createElement('tr');
+
+        this.agregarCelda(nuevaFila, miembro.first_name + ' ' + (miembro.middle_name || '') + ' ' + miembro.last_name);
+        this.agregarCelda(nuevaFila, miembro.party);
+        this.agregarCelda(nuevaFila, miembro.state);
+        this.agregarCelda(nuevaFila, miembro.seniority);
+        this.agregarCelda(nuevaFila, miembro.votes_with_party_pct + '%');
+        this.posicionInsercion.appendChild(nuevaFila); //miembro agregado
+      },
+
+      //inserta un TD con la info a insertar en la row indicada, retorna el TD creado
+      agregarCelda: function (row, textInfo) {
         let nuevoTD, nuevoTexto;
 
         nuevoTD = document.createElement('td');
-        nuevoTexto = document.createTextNode(infoInsertar);
+        nuevoTexto = document.createTextNode(textInfo);
 
         nuevoTD.appendChild(nuevoTexto);
         row.appendChild(nuevoTD);
+        return nuevoTD;
       },
 
-      agregarCeldaLink: function() {
+      //mismo comportamiento que agregarCelda pero el elemento agregado sera un link
+      agregarCeldaLink: function (row, textInfo, url) {
+        let nuevoTD = this.agregarCelda(row, textInfo);
+      },
 
+      agregarTodosLosMiembros: function () {
+        this.miembros.forEach(m => gestorMiembros.agregarFilaMiembro(m));
       }
     };
 
-    miembros.forEach(m => gestorMiembros.agregarMiembro(m, posicionTabla));
+    gestorMiembros.setArrayMiebros(data.results[0].members);
+    gestorMiembros.setPosicionDondeInsertar(document.querySelector('#senate-data tbody'));
+    gestorMiembros.agregarTodosLosMiembros();
 
   </script>
 </body>
