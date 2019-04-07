@@ -3,20 +3,22 @@
 
 <head>
   <title>Senate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 </head>
 
 <body>
   <nav>
     <div>
       <div>
-        <a href="#">TGIF</a>
+        <a href="index.html">TGIF</a>
       </div>
       <ul>
         <li><a href="index.html">Home</a></li>
         <li>
           <a href="#">Congress 113</a>
           <ul>
-            <li><a href="senate.html">Senate</a></li>
+            <li><a href="#">Senate</a></li>
             <li><a href="house.html">House</a></li>
           </ul>
         </li>
@@ -28,8 +30,9 @@
     <div>
     </div>
   </header>
+
   <!--Table container-->
-  <div>
+  <div id="senate-data">
     <h2>Senators</h2>
     <p>First convened in 1789, the composition and powers of the Senate are established in Article One of the U.S.
       Constitution. Each state is represented by two senators, regardless of population, who serve staggered six-year
@@ -37,10 +40,10 @@
       precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal
       judges, other federal executive officials, military officers, regulatory officials, ambassadors, and other federal
       uniformed officers, as well as trial of federal officials impeached by the House.</p>
-    <table id="senate-data">
+    <table>
       <thead>
         <tr>
-          <th>Senator</th>
+          <th>Name</th>
           <th>Party Affilication</th>
           <th>State</th>
           <th>Seniority</th>
@@ -49,64 +52,17 @@
       </thead>
       <tbody></tbody>
     </table>
+    <footer>
+      <p>&copy;2016 TGIF | All rights reserved</p>
+    </footer>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="scripts/pro-congress-113-senate.js"></script>
+    <script src="scripts/comunes.js"></script>
+    <script src="scripts/senate.js"></script>
   </div>
-  <script src="scripts/pro-congress-113-senate.js"></script>
-  <script>
-    "use strict";
-
-    //objeto que agrega/saca/filtra miembros de la tabla
-    const gestorMiembros = {
-      posicionInsercion: undefined,
-      miembros: undefined,
-
-      setPosicionDondeInsertar: function (pos) {
-        this.posicionInsercion = pos;
-      },
-
-      //el array debe contener todos los miembros disponibles
-      setArrayMiebros: function (arr) {
-        this.miembros = arr;
-      },
-
-      //cada fila contiene la info personal de un funcionario
-      agregarFilaMiembro: function (miembro) {
-        let nuevaFila = document.createElement('tr');
-
-        this.agregarCelda(nuevaFila, miembro.first_name + ' ' + (miembro.middle_name || '') + ' ' + miembro.last_name);
-        this.agregarCelda(nuevaFila, miembro.party);
-        this.agregarCelda(nuevaFila, miembro.state);
-        this.agregarCelda(nuevaFila, miembro.seniority);
-        this.agregarCelda(nuevaFila, miembro.votes_with_party_pct + '%');
-        this.posicionInsercion.appendChild(nuevaFila); //miembro agregado
-      },
-
-      //inserta un TD con la info a insertar en la row indicada, retorna el TD creado
-      agregarCelda: function (row, textInfo) {
-        let nuevoTD, nuevoTexto;
-
-        nuevoTD = document.createElement('td');
-        nuevoTexto = document.createTextNode(textInfo);
-
-        nuevoTD.appendChild(nuevoTexto);
-        row.appendChild(nuevoTD);
-        return nuevoTD;
-      },
-
-      //mismo comportamiento que agregarCelda pero el elemento agregado sera un link
-      agregarCeldaLink: function (row, textInfo, url) {
-        let nuevoTD = this.agregarCelda(row, textInfo);
-      },
-
-      agregarTodosLosMiembros: function () {
-        this.miembros.forEach(m => gestorMiembros.agregarFilaMiembro(m));
-      }
-    };
-
-    gestorMiembros.setArrayMiebros(data.results[0].members);
-    gestorMiembros.setPosicionDondeInsertar(document.querySelector('#senate-data tbody'));
-    gestorMiembros.agregarTodosLosMiembros();
-
-  </script>
 </body>
 
 </html>

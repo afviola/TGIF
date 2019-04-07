@@ -3,20 +3,22 @@
 
 <head>
   <title>House</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 </head>
 
 <body>
   <nav>
     <div>
       <div>
-        <a href="#">TGIF</a>
+        <a href="index.html">TGIF</a>
       </div>
       <ul>
-        <li><a href="#">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li>
           <a href="#">Congress 113</a>
           <ul>
-            <li><a href="#">Senate</a></li>
+            <li><a href="senate.html">Senate</a></li>
             <li><a href="#">House</a></li>
           </ul>
         </li>
@@ -24,7 +26,7 @@
     </div>
   </nav>
   <!--Table container-->
-  <div>
+  <div id="house-data">
     <h2>Congressmen</h2>
     <p>The major power of the House is to pass federal legislation that affects the entire country, although its
       bills must also be passed by the Senate and further agreed to by the U.S. President before becoming law
@@ -34,77 +36,29 @@
       majority in the Electoral College.</p>
     <p>Each U.S. state is represented in the House in proportion to its population as measured in the census, but
       every state is entitled to at least one representative. </p>
-    <table>
-      <thead>
-        <tr>
-          <th>Members</th>
-          <th>First name</th>
-          <th>Middle name</th>
-          <th>Last name</th>
-          <th>Party</th>
-          <th>Total votes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Robert</td>
-          <td>B.</td>
-          <td>Aderholt</td>
-          <td>R</td>
-          <td>1192</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Justin</td>
-          <td>null</td>
-          <td>Amash</td>
-          <td>R</td>
-          <td>1192</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Mark</td>
-          <td>null</td>
-          <td>Amodei</td>
-          <td>R</td>
-          <td>1192</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Alma</td>
-          <td></td>
-          <td>Adams</td>
-          <td>D</td>
-          <td>48</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>Spencer</td>
-          <td>null</td>
-          <td>Bachus</td>
-          <td>R</td>
-          <td>1192</td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td>Joe</td>
-          <td>L.</td>
-          <td>Barton</td>
-          <td>R</td>
-          <td>1192</td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td>Xavier</td>
-          <td>null</td>
-          <td>Becerra</td>
-          <td>D</td>
-          <td>1192</td>
-        </tr>
-      </tbody>
-    </table>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Party Affilication</th>
+            <th>State</th>
+            <th>Seniority</th>
+            <th>Percentaje of votes with party</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
   </div>
+  <footer>
+    <p>&copy;2016 TGIF | All rights reserved</p>
+  </footer>
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="scripts/pro-congress-113-house.js"></script>
+  <script src="scripts/comunes.js"></script>
+  <script src="scripts/house.js"></script>
 </body>
 
 </html>
