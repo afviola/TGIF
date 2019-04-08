@@ -64,8 +64,30 @@ const gestorMiembros = {
 
     return nuevoTD;
   },
-
+  
   agregarTodosLosMiembros: function() {
     this.miembros.forEach(m => gestorMiembros.agregarFilaMiembro(m));
+  },
+
+  filterMembersBy: function(condicion) {
+    return this.miembros.filter(m => condicion(m));
+  }
+};
+
+const condicionesFiltrado = {
+  esRepublicano: function(miembro) {
+    return miembro.party === 'R';
+  },
+
+  esDemocrata: function(miembro) {
+    return miembro.party === 'D';
+  },
+
+  esIndependiente: function(miembro) {
+    return miembro.party === 'I';
+  },
+
+  stateAll: function(miembro) {
+    return true;
   }
 };
