@@ -9,6 +9,7 @@ const gestorMiembros = {
     this.miembros = arrMiembros;
   },
 
+  //tabla es la posicion donde voy a insertar los miembros
   setPosicionTabla: function(posicion) {
     this.tabla = posicion;
   },
@@ -47,9 +48,11 @@ const gestorMiembros = {
     while(this.tabla.childNodes.length > 0) {
       this.tabla.deleteRow(0);
     }
-  },
+  }
+};
 
-  filtrarMiembrosCondiciones: function(arrCondiciones) {
-    
+let gestorFiltros = {
+  getCheckboxesActivados: function() {
+    return document.querySelectorAll('input[name=checkboxes]:checked');
   }
 };

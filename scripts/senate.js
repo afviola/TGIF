@@ -5,6 +5,4 @@ tabla = document.querySelector('#senate-data table tbody');
 
 gestorMiembros.setMiembros(arrayMiembros);
 gestorMiembros.setPosicionTabla(tabla);
-gestorMiembros.agregarTodosLosMiembros();
-
-gestorMiembros.quitarTodosLosMiembros();
+gestorMiembros.agregarTodosLosMiembros(arrayMiembros);
