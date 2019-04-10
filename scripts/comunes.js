@@ -2,92 +2,54 @@
 
 //objeto que agrega/saca/filtra miembros de la tabla
 const gestorMiembros = {
-  posicionInsercion: undefined,
-  miembros: undefined,
+  miembros: null,
+  tabla: null,
 
-  setPosicionDondeInsertar: function(pos) {
-    this.posicionInsercion = pos;
+  setMiembros: function(arrMiembros) {
+    this.miembros = arrMiembros;
   },
 
-  //el array debe contener todos los miembros disponibles
-  setArrayMiebros: function(arr) {
-    this.miembros = arr;
+  setPosicionTabla: function(posicion) {
+    this.tabla = posicion;
   },
 
-  getMemberFullName: function(miembro) {
-    return (
-      miembro.first_name +
-      " " +
-      (miembro.middle_name || "") +
-      " " +
-      miembro.last_name
-    );
-  },
+  //agrega una fila en la tabla conteniendo los datos necesarios del miembro(nombre, partido, votos, etc)
+  agregarMiembroEnTabla: function(miembro) {
+    let nuevaFila = this.tabla.insertRow(-1);
 
-  //cada fila contiene la info personal de un funcionario
-  agregarFilaMiembro: function(miembro) {
-    let nuevaFila = document.createElement("tr");
-
-    this.agregarCeldaLink(
+    this.agregarDatoEnFila(
       nuevaFila,
-      this.getMemberFullName(miembro),
-      miembro.url
+      miembro.first_name +
+        " " +
+        (miembro.middle_name || "") +
+        " " +
+        miembro.last_name
     );
-    this.agregarCelda(nuevaFila, miembro.party);
-    this.agregarCelda(nuevaFila, miembro.state);
-    this.agregarCelda(nuevaFila, miembro.seniority);
-    this.agregarCelda(nuevaFila, miembro.votes_with_party_pct + "%");
-    this.posicionInsercion.appendChild(nuevaFila); //miembro agregado
+    this.agregarDatoEnFila(nuevaFila, miembro.party);
+    this.agregarDatoEnFila(nuevaFila, miembro.state);
+    this.agregarDatoEnFila(nuevaFila, miembro.seniority);
+    this.agregarDatoEnFila(nuevaFila, miembro.votes_with_party_pct + "%");
   },
 
-  //inserta un TD con la info a insertar en la row indicada, retorna el TD creado
-  agregarCelda: function(row, textInfo) {
-    let nuevoTD = document.createElement("td");
-
-    nuevoTD.appendChild(document.createTextNode(textInfo));
-    row.appendChild(nuevoTD);
-
-    return nuevoTD;
+  //Agrega un TD en la fila conteniendo la info y lo retorna
+  agregarDatoEnFila: function(fila, info) {
+    let nuevoDato = fila.insertCell(-1);
+    nuevoDato.appendChild(document.createTextNode(info));
+    return nuevoDato;
   },
 
-  //inserta un td cuyo textInfo sera un link a la url indicada. retorna el TD creado
-  agregarCeldaLink: function(row, textInfo, url) {
-    let nuevoTD, nuevoLink;
-
-    nuevoTD = this.agregarCelda(row, textInfo);
-
-    nuevoLink = document.createElement("a");
-    nuevoLink.setAttribute("href", url);
-
-    nuevoLink.appendChild(nuevoTD.firstChild);
-    nuevoTD.appendChild(nuevoLink);
-
-    return nuevoTD;
-  },
-  
-  agregarTodosLosMiembros: function() {
-    this.miembros.forEach(m => gestorMiembros.agregarFilaMiembro(m));
+  agregarTodosLosMiembros: function(miembrosFiltrados) {
+    this.quitarTodosLosMiembros();
+    miembrosFiltrados.forEach(m => this.agregarMiembroEnTabla(m));
   },
 
-  filterMembersBy: function(condicion) {
-    return this.miembros.filter(m => condicion(m));
-  }
-};
-
-const condicionesFiltrado = {
-  esRepublicano: function(miembro) {
-    return miembro.party === 'R';
+  quitarTodosLosMiembros: function() {
+    while(this.tabla.childNodes.length > 0) {
+      this.tabla.deleteRow(0);
+    }
   },
 
-  esDemocrata: function(miembro) {
-    return miembro.party === 'D';
-  },
-
-  esIndependiente: function(miembro) {
-    return miembro.party === 'I';
-  },
-
-  stateAll: function(miembro) {
-    return true;
+  filtrarMiembrosCondiciones: function(arrCondiciones) {
+    
   }
 };

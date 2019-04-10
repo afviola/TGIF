@@ -1,5 +1,10 @@
-let arrayMiembros = data.results[0].members;
+let arrayMiembros, tabla;
 
-gestorMiembros.setArrayMiebros(arrayMiembros);
-gestorMiembros.setPosicionDondeInsertar(document.querySelector('#senate-data tbody'));
+arrayMiembros = data.results[0].members;
+tabla = document.querySelector('#senate-data table tbody');
+
+gestorMiembros.setMiembros(arrayMiembros);
+gestorMiembros.setPosicionTabla(tabla);
 gestorMiembros.agregarTodosLosMiembros();
+
+gestorMiembros.quitarTodosLosMiembros();
