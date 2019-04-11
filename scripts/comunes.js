@@ -1,13 +1,8 @@
 "use strict";
 
-//objeto que agrega/saca/filtra miembros de la tabla
-const gestorMiembros = {
-  miembros: null,
+//objeto que dibuja/saca/ miembros de la tabla
+const dibujaMiembros = {
   tabla: null,
-
-  setMiembros: function(arrMiembros) {
-    this.miembros = arrMiembros;
-  },
 
   //tabla es la posicion donde voy a insertar los miembros
   setPosicionTabla: function(posicion) {
@@ -39,20 +34,48 @@ const gestorMiembros = {
     return nuevoDato;
   },
 
-  agregarTodosLosMiembros: function(miembrosFiltrados) {
-    this.quitarTodosLosMiembros();
-    miembrosFiltrados.forEach(m => this.agregarMiembroEnTabla(m));
-  },
-
   quitarTodosLosMiembros: function() {
     while(this.tabla.childNodes.length > 0) {
       this.tabla.deleteRow(0);
     }
+  },
+
+  //limpia la tabla de miembros y coloca los nuevos segun los filtros actuales
+  updateUI: function(miembrosFiltrados) {
+    this.quitarTodosLosMiembros();
+    miembrosFiltrados.forEach(m => this.agregarMiembroEnTabla(m));
   }
 };
 
-let gestorFiltros = {
-  getCheckboxesActivados: function() {
-    return document.querySelectorAll('input[name=checkboxes]:checked');
+/*objeto que se encarga de escuchar lo que ocurre con los filtros en el HTML y
+envia los miembros filtrados a dibujaMiembros para que los muestre*/
+const filtrador = {
+  miembros: null,
+
+  //setea la lista inicial de miembros sobre la que se va a trabajar
+  setMiembros: function(arrMiembros) {
+    this.miembros = arrMiembros;
+  },
+
+  getMiembros: function() {
+    return this.miembros;
+  },
+
+  getCheckboxesValues: function() {
+    return Array.from(document.querySelectorAll('input[name="party-filter"]:checked')).map(check => check.value);
+  },
+
+  getStateFilterValue: function() {
+    return document.querySelector('select').value;
+  },
+
+  filtrarMiembros: function() {
+    let checkValues, stateFilterValue;
+
+    checkValues = this.getCheckboxesValues();
+    stateFilterValue = this.getStateFilterValue();
+
+    return this.miembros.filter(miembro => (!stateFilterValue || miembro.state === stateFilterValue)) //filtro por estado tiene mayor prioridad
+                        .filter(miembro => checkValues.includes(miembro.party)); //por partido                            
   }
 };
