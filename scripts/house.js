@@ -1,5 +1,9 @@
-let arrayMiembros = data.results[0].members;
+let arrayMiembros, tabla;
 
-gestorMiembros.setArrayMiebros(arrayMiembros);
-gestorMiembros.setPosicionDondeInsertar(document.querySelector('#house-data tbody'));
-gestorMiembros.agregarTodosLosMiembros();
+arrayMiembros = data.results[0].members;
+tabla = document.querySelector('#house-data table tbody');
+
+filtrador.setMiembros(arrayMiembros);
+dibujaMiembros.setPosicionTabla(tabla);
+
+dibujaMiembros.updateUI(filtrador.filtrarMiembros());

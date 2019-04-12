@@ -13,13 +13,14 @@ const dibujaMiembros = {
   agregarMiembroEnTabla: function(miembro) {
     let nuevaFila = this.tabla.insertRow(-1);
 
-    this.agregarDatoEnFila(
+    this.agregarDatoLinkEnFila(
       nuevaFila,
       miembro.first_name +
         " " +
         (miembro.middle_name || "") +
         " " +
-        miembro.last_name
+        miembro.last_name,
+      miembro.url
     );
     this.agregarDatoEnFila(nuevaFila, miembro.party);
     this.agregarDatoEnFila(nuevaFila, miembro.state);
@@ -31,6 +32,16 @@ const dibujaMiembros = {
   agregarDatoEnFila: function(fila, info) {
     let nuevoDato = fila.insertCell(-1);
     nuevoDato.appendChild(document.createTextNode(info));
+    return nuevoDato;
+  },
+
+  agregarDatoLinkEnFila: function(fila, info, url) {
+    let nuevoDato, nuevoLink;
+    nuevoDato = this.agregarDatoEnFila(fila, info);
+    nuevoLink = document.createElement('a');
+    nuevoLink.setAttribute('href', url);
+    nuevoLink.appendChild(nuevoDato.firstChild);
+    nuevoDato.appendChild(nuevoLink);
     return nuevoDato;
   },
 
