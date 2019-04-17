@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="styles/estilos.css">
 </head>
 
 <body>
@@ -69,9 +68,9 @@
       </div>
     </div>
 
-    <button type="button" class="btn btn-primary btn-sm">Read More</button>
+    <a id="link-contenido-extra" href="#contenido-extra" data-toggle="collapse" data-target="#contenido-extra" onclick="gestionarAcordeon()">Read more...</a>
 
-    <div>
+    <div id="contenido-extra" class="collapse">
       <h3>Background History of Government Transparency</h3>
       <p>In the West, the idea that government should be open to public scrutiny and susceptible to public opinion dates
         back at least to the time of the Enlightenment, when many philosophes made an attack on absolutist doctrine of
@@ -109,6 +108,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="scripts/home.js"></script>
 </body>
 
 </html>
