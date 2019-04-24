@@ -72,6 +72,7 @@ const filtrador = {
     return this.miembros;
   },
 
+  /*** retorna un array con los values de los party checkboxes ***/
   getCheckboxesValues: function() {
     return Array.from(document.querySelectorAll('input[name="party-filter"]:checked')).map(check => check.value);
   },
@@ -90,3 +91,28 @@ const filtrador = {
                         .filter(miembro => checkValues.includes(miembro.party)); //por partido                            
   }
 };
+
+/*** Solo se usa en index.html ***/
+function gestionarAcordeon() {
+  let link = document.getElementById('link-contenido-extra');
+  if(link.innerHTML === 'Read more...') {
+      link.innerHTML = 'Read less';
+  } else {
+      link.innerHTML = 'Read more...';
+  }
+}
+
+let arrayMiembros, tabla;
+
+arrayMiembros = data.results[0].members;
+tabla = document.querySelector('table#tabla-principal tbody');
+
+filtrador.setMiembros(arrayMiembros);
+dibujaMiembros.setPosicionTabla(tabla);
+
+dibujaMiembros.updateUI(filtrador.filtrarMiembros());
+
+
+
+
+
