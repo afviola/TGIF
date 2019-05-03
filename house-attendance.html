@@ -176,7 +176,14 @@
     </table>
 
   </div>
+  <script src="scripts/pro-congress-113.js"></script>
   <script>
+    let democratas = [];
+    let republicanos = [];
+    let independientes = [];
+    
+    let miembros = data.results[0].members;
+    
     let estadisticas = {
       "number-of-democrats": 0,
       "number-of-republicans": 0,
@@ -191,6 +198,11 @@
       "least-loyal": [],
       "most-loyal": []
     };
+    
+    function cuantosCumplen(lista, propiedad, valor) {
+      return lista.filter(elemento => elemento.propiedad === valor).length;
+    }
+    
   </script>
 </body>
 
