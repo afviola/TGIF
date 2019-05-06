@@ -176,15 +176,11 @@
     </table>
 
   </div>
-  <script src="scripts/pro-congress-113.js"></script>
+  <script src="scripts/pro-congress-113-senate.js"></script>
   <script>
-    let democratas = [];
-    let republicanos = [];
-    let independientes = [];
-    
-    let miembros = data.results[0].members;
-    
-    let estadisticas = {
+    "use strict";
+
+    const estadisticas = {
       "number-of-democrats": 0,
       "number-of-republicans": 0,
       "number-of-independents": 0,
@@ -198,11 +194,54 @@
       "least-loyal": [],
       "most-loyal": []
     };
-    
-    function cuantosCumplen(lista, propiedad, valor) {
-      return lista.filter(elemento => elemento.propiedad === valor).length;
+
+    const miembrosTotales = {
+      miembros: null,
+      republicanos: null,
+      democratas: null,
+      independientes: null,
+
+      inicializarMiembros: function () {
+        this.miembros = data.results[0].members;
+        this.republicanos = miembros.filter(m => m.party === 'R');
+        this.democratas = miembros.filter(m => m.party === 'D');
+        this.independientes = miembros.filter(m => m.party === 'I');
+      }
+    };
+
+    function votoPromedioConPartido(miembrosDelPartido) {
+      return miembrosDelPartido.reduce((m1, m2) => m1.votes_with_party_pct + m2.votes_with_party_pct) / miembrosDelPartido.length;
     }
-    
+
+    function votosTotales() {
+      return miembrosPartido.democratas.length + miembrosPartido.independientes.length + miembrosPartido.republicanos.length;
+    }
+
+    function pctMejorAsistencia(porcentaje) {
+      let longitudLista, cantMinimaMiembros;
+
+      longitudLista = miembrosTotales.miembros.length;
+      cantMinimaMiembros = longitudLista * (porcentaje/100);
+    }
+
+    function pctPeorAsistencia(porcentaje) {
+
+    }
+
+    function cargarEstadisticas(miembrosPartidos, objetoEstadisticas) {
+
+    }
+
+    miembrosPorPartido.inicializarMiembros();
+
+    estadisticas["number-of-democrats"] = miembrosPorPartido.democratas.length;
+    estadisticas["number-of-independents"] = miembrosPorPartido.independientes.length;
+    estadisticas["number-of-republicans"] = miembrosPorPartido.republicanos.length;
+
+    estadisticas["total"] = miembrosPorPartido.democratas.length + miembrosPorPartido.independientes.length + miembrosPorPartido.republicanos.length;
+
+    console.log(estadisticas);
+
   </script>
 </body>
 
