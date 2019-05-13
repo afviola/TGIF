@@ -28,75 +28,44 @@ const miembrosTotales = {
   }
 };
 
-function cantidadMiembrosTotales() {
-  return miembrosTotales.democratas.length + 
-         miembrosTotales.independientes.length + 
-         miembrosTotales.republicanos.length;
-}
-
-function votoPromedioConPartido(miembrosDelPartido) {
-  return miembrosDelPartido
+function votoPromedioConPartido(miembrosDeUnPartido) {
+  return  miembrosDeUnPartido
             .map(m => m.votes_with_party_pct)
-            .reduce((pct1, pct2) => pct1 + pct2) / miembrosDelPartido.length;
+            .reduce((pct1, pct2) => pct1 + pct2) / miembrosDeUnPartido.length;
 }
 
-const criteriosOrden = {
-  miembrosMayorAMenorPartyPct: (m1, m2) => m1.votes_with_party_pct - m2.votes_with_party_pct,
-  miembrosMenorAMayorPartyPct: (m1, m2) => m2.votes_with_party_pct - m1.votes_with_party_pct 
-};
+function get10PctMiembrosSegun(key, fnOrdenamiento) {
+  let listado, valorLimite;
 
+  listado = miembrosTotales.miembros;
+  listado.sort(fnOrdenamiento);
+  valorLimite = listado[Math.round(listado.length * 0.1) - 1][key];
+  
+  if (listado[0][key] >= valorLimite) {
+    return listado.filter(m => m[key] >= valorLimite);
+  } 
 
-
-function leastEngagedMembers(porcentaje) {
-  let posicionCritica, valorLimite, tamanioLista;
-
-  miembrosTotales.miembros.sort((m1,m2) => m1.votes_with_party_pct - m2.votes_with_party_pct);
-  tamanioLista = miembrosTotales.miembros.length;
-  posicionCritica = Math.round(tamanioLista * (porcentaje/100)) - 1;
-  valorLimite = miembrosTotales.miembros[posicionCritica].votes_with_party_pct;
-
-  return miembrosTotales.miembros.filter(m => m.votes_with_party_pct <= valorLimite);
-}
-
-function mostEngagedMembers(porcentaje) {
-  let posicionCritica, valorLimite, tamanioLista;
-
-  miembrosTotales.miembros.sort((m1,m2) => m2.votes_with_party_pct - m1.votes_with_party_pct);
-  tamanioLista = miembrosTotales.miembros.length;
-  posicionCritica = Math.round(tamanioLista * (porcentaje/100)) - 1;
-  valorLimite = miembrosTotales.miembros[posicionCritica].votes_with_party_pct;
-
-  return miembrosTotales.miembros.filter(m => m.votes_with_party_pct >= valorLimite);
-}
-
-function leastLoyalMembers(porcentaje) {
-
-}
-
-function mostLoyalMembers(porcentaje) {
-
+  return listado.filter(m => m[key] <= valorLimite);
 }
 
 function cargarEstadisticas() {
   estadisticas["number-of-democrats"] = miembrosTotales.democratas.length;
   estadisticas["number-of-independents"] = miembrosTotales.independientes.length;
   estadisticas["number-of-republicans"] = miembrosTotales.republicanos.length;
-
-  estadisticas["total"] = cantidadMiembrosTotales();
+  estadisticas["total"] = miembrosTotales.miembros.length;
 
   estadisticas["independents-average-votes-with-party"] = votoPromedioConPartido(miembrosTotales.independientes);
   estadisticas["democrats-average-votes-with-party"] = votoPromedioConPartido(miembrosTotales.democratas);
   estadisticas["republicans-average-votes-with-party"] = votoPromedioConPartido(miembrosTotales.republicanos);
+
+  estadisticas["most-engaged"] = get10PctMiembrosSegun("missed_votes_pct", (m1, m2) => m1.missed_votes_pct - m2.missed_votes_pct);
+  estadisticas["least-engaged"] = get10PctMiembrosSegun("missed_votes_pct", (m1, m2) => m2.missed_votes_pct - m1.missed_votes_pct);
+
+  estadisticas["most-loyal"] = null;
+  estadisticas["least-loyal"] = null;
 }
 
 miembrosTotales.inicializarMiembros();
 cargarEstadisticas();
-console.log(mostEngagedMembers(10));
 
-
-
-
-
-
-
-
+console.log(estadisticas);

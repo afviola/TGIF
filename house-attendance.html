@@ -175,77 +175,7 @@
     </table>
   </div>
   
-  <script src="scripts/pro-congress-113-senate.js"></script>
-  <script>
-    "use strict";
-
-    const estadisticas = {
-      "number-of-democrats": 0,
-      "number-of-republicans": 0,
-      "number-of-independents": 0,
-      "total": 0,
-      "democrats-average-votes-with-party": 0,
-      "republicans-average-votes-with-party": 0,
-      "independents-average-votes-with-party": 0,
-      "total-average": 0,
-      "least-engaged": [],
-      "most-engaged": [],
-      "least-loyal": [],
-      "most-loyal": []
-    };
-
-    const miembrosTotales = {
-      miembros: null,
-      republicanos: null,
-      democratas: null,
-      independientes: null,
-
-      inicializarMiembros: function () {
-        this.miembros = data.results[0].members;
-        this.republicanos = this.miembros.filter(m => m.party === 'R');
-        this.democratas = this.miembros.filter(m => m.party === 'D');
-        this.independientes = this.miembros.filter(m => m.party === 'I');
-      }
-    };
-
-    function votoPromedioConPartido(miembrosDelPartido) {
-      return miembrosDelPartido.reduce((m1, m2) => m1.votes_with_party_pct + m2.votes_with_party_pct) / miembrosDelPartido.length;
-    }
-
-    function votosTotales() {
-      return miembrosTotales.democratas.length + miembrosTotales.independientes.length + miembrosTotales.republicanos.length;
-    }
-
-    function pctMejorAsistencia(porcentaje) {
-      let longitudLista, cantMinimaMiembros, valorLimite;
-
-      longitudLista = miembrosTotales.miembros.length;
-      cantMinimaMiembros = Math.round(longitudLista * (porcentaje/100));
-
-      miembrosTotales.miembros.sort((m1, m2) => m2.votes_with_party_pct - m1.votes_with_party_pct);
-
-      valorLimite = miembrosTotales.miembros[cantMinimaMiembros - 1];
-
-    }
-
-    function pctPeorAsistencia(porcentaje) {
-
-    }
-
-    function cargarEstadisticas() {
-      estadisticas["number-of-democrats"] = miembrosTotales.democratas.length;
-      estadisticas["number-of-independents"] = miembrosTotales.independientes.length;
-      estadisticas["number-of-republicans"] = miembrosTotales.republicanos.length;
-
-      estadisticas["total"] = votosTotales();
-    }
-
-    miembrosTotales.inicializarMiembros();
-    cargarEstadisticas();
-    pctMejorAsistencia(10);
-
-    console.log(miembrosTotales.miembros);
-  </script>
+  <script src="scripts/pro-congress-113-house.js"></script>
 </body>
 
 </html>
