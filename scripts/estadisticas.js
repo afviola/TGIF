@@ -30,7 +30,7 @@ const miembrosTotales = {
 
 function votoPromedioConPartido(miembrosDeUnPartido) {
   return  miembrosDeUnPartido
-            .map(m => m.votes_with_party_pct)
+            .map(miembro => miembro.votes_with_party_pct)
             .reduce((pct1, pct2) => pct1 + pct2) / miembrosDeUnPartido.length;
 }
 
@@ -61,8 +61,8 @@ function cargarEstadisticas() {
   estadisticas["most-engaged"] = get10PctMiembrosSegun("missed_votes_pct", (m1, m2) => m1.missed_votes_pct - m2.missed_votes_pct);
   estadisticas["least-engaged"] = get10PctMiembrosSegun("missed_votes_pct", (m1, m2) => m2.missed_votes_pct - m1.missed_votes_pct);
 
-  estadisticas["most-loyal"] = null;
-  estadisticas["least-loyal"] = null;
+  estadisticas["least-loyal"] = get10PctMiembrosSegun("missed_votes", (m1, m2) => m2.missed_votes - m1.missed_votes);
+  estadisticas["most-loyal"] = get10PctMiembrosSegun("missed_votes", (m1, m2) => m1.missed_votes - m2.missed_votes);
 }
 
 miembrosTotales.inicializarMiembros();
