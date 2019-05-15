@@ -23,8 +23,8 @@ function getNombreCompleto(miembro) {
 function crearTablasGenericas() {
   let tablaLeast, tablaMost;
 
-  tablaLeast = document.getElementById('least-table');
-  tablaMost = document.getElementById('most-table');
+  tablaLeast = document.getElementById("least-table");
+  tablaMost = document.getElementById("most-table");
 
   //determino si estoy en un html de tipo attendance o loyalty
   if (window.location.pathname.includes('attendance')) {
@@ -48,5 +48,4 @@ function crearTablasGenericas() {
 
 crearGlanceTable();
 crearTablasGenericas();
-
 

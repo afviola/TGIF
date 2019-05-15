@@ -65,5 +65,3 @@ function cargarEstadisticas() {
 
 partidos.inicializarMiembros();
 cargarEstadisticas();
-
-console.log(estadisticas);
