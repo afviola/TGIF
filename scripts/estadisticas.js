@@ -17,9 +17,9 @@ const estadisticas = {
 };
 
 const partidos = {
-  republicanos: null,
-  democratas: null,
-  independientes: null,
+  republicanos: [],
+  democratas: [],
+  independientes: [],
 
   inicializarMiembros: function() {
     this.republicanos = miembros.filter(m => m.party === "R");
@@ -29,9 +29,13 @@ const partidos = {
 };
 
 function votoPromedioConPartido(miembrosDeUnPartido) {
-  return  miembrosDeUnPartido
+  if (miembrosDeUnPartido.length) {
+    return Math.round(
+        miembrosDeUnPartido
             .map(miembro => miembro.votes_with_party_pct)
-            .reduce((pct1, pct2) => pct1 + pct2) / miembrosDeUnPartido.length;
+            .reduce((pct1, pct2) => pct1 + pct2, 0) / miembrosDeUnPartido.length);
+  }
+  return 0; 
 }
 
 function get10PctMiembrosSegun(key, fnOrdenamiento) {
@@ -59,8 +63,8 @@ function cargarEstadisticas() {
   estadisticas["most-engaged"] = get10PctMiembrosSegun("missed_votes_pct", (m1, m2) => m1.missed_votes_pct - m2.missed_votes_pct);
   estadisticas["least-engaged"] = get10PctMiembrosSegun("missed_votes_pct", (m1, m2) => m2.missed_votes_pct - m1.missed_votes_pct);
 
-  estadisticas["least-loyal"] = get10PctMiembrosSegun("missed_votes", (m1, m2) => m2.missed_votes - m1.missed_votes);
-  estadisticas["most-loyal"] = get10PctMiembrosSegun("missed_votes", (m1, m2) => m1.missed_votes - m2.missed_votes);
+  estadisticas["most-loyal"] = get10PctMiembrosSegun("votes_with_party_pct", (m1, m2) => m2.votes_with_party_pct - m1.votes_with_party_pct);
+  estadisticas["least-loyal"] = get10PctMiembrosSegun("votes_with_party_pct", (m1, m2) => m1.votes_with_party_pct - m2.votes_with_party_pct);
 }
 
 partidos.inicializarMiembros();
