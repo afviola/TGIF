@@ -1,7 +1,7 @@
 "use strict";
 
-const miembros = data.results[0].members;
-
+let miembros = null;
+  
 const estadisticas = {
   "number-of-democrats": 0,
   "number-of-republicans": 0,
@@ -21,7 +21,7 @@ const partidos = {
   democratas: [],
   independientes: [],
 
-  inicializarMiembros: function() {
+  inicializarMiembros() {
     this.republicanos = miembros.filter(m => m.party === "R");
     this.democratas = miembros.filter(m => m.party === "D");
     this.independientes = miembros.filter(m => m.party === "I");
@@ -66,6 +66,3 @@ function cargarEstadisticas() {
   estadisticas["most-loyal"] = get10PctMiembrosSegun("votes_with_party_pct", (m1, m2) => m2.votes_with_party_pct - m1.votes_with_party_pct);
   estadisticas["least-loyal"] = get10PctMiembrosSegun("votes_with_party_pct", (m1, m2) => m1.votes_with_party_pct - m2.votes_with_party_pct);
 }
-
-partidos.inicializarMiembros();
-cargarEstadisticas();
